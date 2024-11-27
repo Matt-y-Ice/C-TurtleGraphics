@@ -1,0 +1,4 @@
+/home/milkiwilki/Jetbrains/Clion-2024.3/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_MAKE_PROGRAM=/home/milkiwilki/Jetbrains/Clion-2024.3/bin/ninja/linux/x64/ninja -G Ninja -S /home/milkiwilki/CLionProjects/C-TurtleGraphics -B /home/milkiwilki/CLionProjects/C-TurtleGraphics/cmake-build-release
+-- Configuring done (0.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/milkiwilki/CLionProjects/C-TurtleGraphics/cmake-build-release

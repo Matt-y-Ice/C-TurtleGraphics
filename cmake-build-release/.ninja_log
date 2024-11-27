@@ -1,0 +1,8 @@
+# ninja log v6
+1	35	1732726912619009936	CMakeFiles/turtle.dir/Src/utilities.c.o	a30dd0b71c87ed11
+1	45	1732726912619009936	CMakeFiles/turtle.dir/Src/sprite.c.o	2f1b22ef737fdc71
+1	325	1732726912619009936	CMakeFiles/turtle.dir/Src/events.c.o	4e97892b5b4cd1c4
+1	323	1732726912619009936	CMakeFiles/turtle.dir/Src/text.c.o	b4b6642d433e1255
+0	326	1732726912618009938	CMakeFiles/turtle.dir/Src/main.c.o	8443b8dc18caffb7
+0	339	1732726912618009938	CMakeFiles/turtle.dir/Src/graphics.c.o	f78ad0e9a9d55e4a
+339	382	1732726912958009127	/home/milkiwilki/CLionProjects/C-TurtleGraphics/Binaries/turtle	586975f84364d4d3

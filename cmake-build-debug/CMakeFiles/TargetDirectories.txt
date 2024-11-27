@@ -1,0 +1,3 @@
+/home/milkiwilki/CLionProjects/C-TurtleGraphics/cmake-build-debug/CMakeFiles/turtle.dir
+/home/milkiwilki/CLionProjects/C-TurtleGraphics/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/milkiwilki/CLionProjects/C-TurtleGraphics/cmake-build-debug/CMakeFiles/rebuild_cache.dir
