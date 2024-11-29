@@ -19,10 +19,9 @@
 
 ## Introduction
 
-The Interactive Turtle Graphics Program is a C-based application that emulates the classic turtle graphics concept. Inspired by the Logo programming language, this program allows users to control a sprite (the "turtle") on a 2D canvas through keyboard inputs. As the turtle moves, it can draw lines, enabling users to create intricate patterns and designs interactively.
+The Interactive Turtle Graphics Program is a C-based application inspired by the classic turtle graphics concept, which was popularized by the Logo programming language. Unlike traditional turtle graphics, where the turtle is controlled by a sequence of commands or scripts, this program allows users to directly control the turtle through real-time keyboard inputs. As the turtle moves, it can draw lines on a 2D canvas, enabling users to create intricate patterns and designs interactively.
 
-This project utilizes SDL2 for window management and event handling, and OpenGL for rendering graphics. It serves as a practical application of graphics programming concepts, including transformations, orthographic projection, and real-time rendering.
-
+This project leverages SDL2 for window management and event handling, while OpenGL is used for rendering graphics. It serves as a practical exploration of graphics programming, including transformations, orthographic projection, and real-time rendering, offering a hands-on approach to interactive graphics development.
 ## Features
 
 - Interactive Control: Move and rotate the turtle sprite using keyboard inputs.
