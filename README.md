@@ -187,21 +187,33 @@ You can typically find these libraries in your package manager’s repositories.
 
 1. Application Launch
 
+![App Launch](Images/turtle-launch.png)
+
 Caption: The application window upon launch, displaying the turtle sprite centered on the canvas.
 
 2. Drawing Lines
+
+![draw_lines](Images/turtle-drawlines.png)
 
 Caption: The turtle moving with the pen down, drawing lines on the canvas.
 
 3. Changing Colors
 
+![change colors](Images/turtle-line-colors.png)
+
 Caption: Lines drawn in different colors as the user changes the line color using number keys.
 
 4. Sprite Rotation
 
+![sprite rotation](Images/turtle-rotate-1.png)
+![sprite rotation](Images/turtle-rotate-2.png)
+![sprite rotation](Images/turtle-rotate-3.png)
+
 Caption: The turtle sprite rotated at an angle, demonstrating smooth transformations.
 
 5. Real-time Status Display
+
+![sprite rotation](Images/turtle-hud.png)
 
 Caption: Real-time status information displayed within the application window.
 
