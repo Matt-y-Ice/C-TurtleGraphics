@@ -1,3 +1,45 @@
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~LICENSE~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/*
+ * Copyright (C) 2024 Matthew A. Wilkerson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+/*
+ * graphics.c - Handles the OpenGL rendering logic for the C-TurtleGraphics program.
+ *
+ * This file is responsible for setting up and managing OpenGL rendering contexts,
+ * loading and rendering sprites, drawing lines, and displaying real-time status information.
+ * It includes the necessary setup for 2D rendering with OpenGL, using orthographic projection
+ * and transformations for sprite rotation, as well as handling dynamic line drawing based on
+ * user input. Additionally, text rendering and updating the graphical display for the turtle's
+ * movement and actions are managed in this file.
+ *
+ * Key functions:
+ *    - setup_opengl: Initializes OpenGL settings, including projection matrix and blending.
+ *    - load_sprite: Loads an image as a sprite and prepares it for rendering.
+ *    - render_scene: Clears the screen and renders lines, sprites, and status text.
+ *    - add_line: Adds a new line to the array, dynamically reallocating memory when necessary.
+ *
+ * Libraries Used:
+ *    - SDL2 for window management and image loading.
+ *    - OpenGL for rendering 2D graphics, transformations, and texturing.
+ */
+
+
+//==================== Header Files ====================
 #include "graphics.h"
 #include "sprite.h"
 #include "text.h"
@@ -5,26 +47,45 @@
 
 #include <SDL2/SDL_image.h>
 #include <stdio.h>
-#include <math.h>
 
-// Constants
+
+//==================== Macros ====================
 #define IMG_W 50.0f
 #define IMG_H 50.0f
 
-// Texture IDs
-GLuint spriteTextureID = 0;
 
-// Lines array
-typedef struct {
+//==================== Structure ====================
+typedef struct {  // Line array structure
     GLfloat x1, y1, x2, y2;   // Coordinates of the line
     GLfloat r, g, b;          // Color of the line (RGB components)
 } Line;
+
+
+//==================== Global Variables ====================
+GLuint spriteTextureID = 0; // Texture ID
 
 Line* lines = NULL;
 int lineCapacity = 50;
 int lineCount = 0;
 
-void setup_opengl(int windowWidth, int windowHeight) {
+
+//==================== Function Definitions ====================
+void setup_opengl(int const windowWidth, int const windowHeight) {
+/*
+ * setup_opengl - Initializes OpenGL settings for 2D rendering.
+ *
+ * This function configures the OpenGL context for rendering 2D graphics within a window,
+ * including setting up the viewport, projection matrix, and model-view matrix.
+ * It also initializes OpenGL blending for transparency effects and allocates memory
+ * for the array of lines to be drawn by the turtle. The function prepares OpenGL
+ * for rendering operations such as drawing sprites and lines with proper transformations
+ * and blending.
+ *
+ * Parameters:
+ *    windowWidth   - The width of the window to set the viewport and projection matrix.
+ *    windowHeight  - The height of the window to set the viewport and projection matrix.
+ */
+
     // Set the viewport
     glViewport(0, 0, windowWidth, windowHeight);
 
@@ -33,7 +94,7 @@ void setup_opengl(int windowWidth, int windowHeight) {
     glLoadIdentity();
     gluOrtho2D(0.0, windowWidth, windowHeight, 0.0);
 
-    // Set up the modelview matrix
+    // Set up the model-view matrix
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
@@ -52,7 +113,24 @@ void setup_opengl(int windowWidth, int windowHeight) {
     }
 }
 
+
 bool load_sprite(const char* bmp) {
+/*
+ * load_sprite - Loads an image and converts it into an OpenGL texture.
+ *
+ * This function loads an image file (BMP format) using SDL_image, converts it into
+ * a format suitable for OpenGL, and uploads it as a texture. The texture is then
+ * used to render the sprite. The function performs error checking during each step
+ * to ensure the image is loaded and converted properly. It also configures OpenGL texture
+ * parameters, such as wrapping and filtering modes, before uploading the texture data.
+ *
+ * Parameters:
+ *    bmp - The file path to the BMP image to be loaded and used as a sprite texture.
+ *
+ * Returns:
+ *    true if the image was loaded and converted successfully, false otherwise.
+ */
+
     // Load the image using SDL_image
     SDL_Surface* tempSurface = IMG_Load(bmp);
     if (!tempSurface) {
@@ -93,7 +171,23 @@ bool load_sprite(const char* bmp) {
     return true;
 }
 
-void render_scene(int windowWidth, int windowHeight) {
+
+void render_scene(int const windowWidth, int const windowHeight) {
+/*
+ * render_scene - Clears the screen and renders all graphical elements, including lines, the sprite, and text.
+ *
+ * This function is responsible for rendering the entire scene in the OpenGL window. It first clears the screen,
+ * then renders all previously drawn lines, followed by rendering the sprite and displaying text. The function
+ * also manages the OpenGL state, including enabling/disabling features such as texturing and blending, and applies
+ * necessary transformations (translation, rotation) to the sprite. The text is rendered as textured quads, with the
+ * sprite being drawn in a 2D orthographic projection system. Real-time status information, such as the turtle's
+ * position, angle, pen state, and line color, is displayed on the screen.
+ *
+ * Parameters:
+ *    windowWidth - The width of the window in pixels.
+ *    windowHeight - The height of the window in pixels.
+ */
+
     // Clear the screen
     glClear(GL_COLOR_BUFFER_BIT);
     checkOpenGLError("glClear");
@@ -134,14 +228,14 @@ void render_scene(int windowWidth, int windowHeight) {
     glBindTexture(GL_TEXTURE_2D, spriteTextureID);
 
     // Calculate sprite corners
-    float halfWidth = IMG_W / 2.0f;
-    float halfHeight = IMG_H / 2.0f;
+    const float halfWidth = IMG_W / 2.0f;
+    const float halfHeight = IMG_H / 2.0f;
 
-    float x = sprite.x;
-    float y = sprite.y;
+    const float x = sprite.x;
+    const float y = sprite.y;
 
     // Set up vertices
-    GLfloat vertices[] = {
+    const GLfloat vertices[] = {
         x - halfWidth, y - halfHeight,
         x + halfWidth, y - halfHeight,
         x + halfWidth, y + halfHeight,
@@ -149,7 +243,7 @@ void render_scene(int windowWidth, int windowHeight) {
     };
 
     // Standard texture coordinates without flipping
-    GLfloat texCoords[] = {
+    const GLfloat texCoords[] = {
         0.0f, 0.0f,  // Bottom-left
         1.0f, 0.0f,  // Bottom-right
         1.0f, 1.0f,  // Top-right
@@ -204,10 +298,9 @@ void render_scene(int windowWidth, int windowHeight) {
     }
 
     // Set text color (black)
-    SDL_Color textColor = {0, 0, 0, 255};
+    const SDL_Color textColor = {0, 0, 0, 255};
 
     // Variables for text position
-    float textX = 10.0f;
     float textY = 10.0f;
 
     // Set up orthographic projection for text rendering
@@ -230,18 +323,19 @@ void render_scene(int windowWidth, int windowHeight) {
         GLuint lineTextureID = render_text(linesText[i], textColor, &lineWidth, &lineHeight);
 
         if (lineTextureID != 0) {
+            const float textX = 10.0f;
             // Bind the text texture
             glBindTexture(GL_TEXTURE_2D, lineTextureID);
 
             // Set up vertices and texture coordinates
-            GLfloat textVertices[] = {
-                textX, textY + lineHeight,
-                textX + lineWidth, textY + lineHeight,
-                textX + lineWidth, textY,
+            const GLfloat textVertices[] = {
+                textX, textY + (float)lineHeight,
+                textX + (float)lineWidth, textY + (float)lineHeight,
+                textX + (float)lineWidth, textY,
                 textX, textY
             };
 
-            GLfloat textTexCoords[] = {
+            const GLfloat textTexCoords[] = {
                 0.0f, 1.0f,  // Bottom-left
                 1.0f, 1.0f,  // Bottom-right
                 1.0f, 0.0f,  // Top-right
@@ -261,7 +355,7 @@ void render_scene(int windowWidth, int windowHeight) {
             glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
             // Update textY for the next line
-            textY += lineHeight + 2; // Add some spacing between lines
+            textY += (float)lineHeight + 2; // Add some spacing between lines
 
             // Delete the texture after rendering
             glDeleteTextures(1, &lineTextureID);
@@ -275,15 +369,35 @@ void render_scene(int windowWidth, int windowHeight) {
     glPopMatrix();
 }
 
-// Function to add a line to the lines array
-void add_line(float x1, float y1, float x2, float y2) {
+
+void add_line(const float x1, const float y1, const float x2, const float y2) {
+/*
+ * add_line - Adds a new line to the lines array with the current color from the sprite.
+ *
+ * This function is responsible for adding a new line to the array of lines. The line is defined by two
+ * points, (x1, y1) and (x2, y2), and is assigned the current color of the sprite. If the array is full,
+ * it dynamically reallocates memory to accommodate more lines. The function increases the `lineCount` and
+ * ensures that memory is properly allocated and freed to avoid memory leaks.
+ *
+ * Parameters:
+ *    x1, y1 - The starting coordinates of the line.
+ *    x2, y2 - The ending coordinates of the line.
+ */
+
     if (lineCount >= lineCapacity) {
         lineCapacity *= 2;
-        lines = realloc(lines, lineCapacity * sizeof(Line));
-        if (!lines) {
+
+        // Use a temporary pointer to hold the result to prevent memory leaks if failure
+        Line* temp = realloc(lines, lineCapacity * sizeof(Line));
+
+        if (!temp) {
             printf("Error reallocating memory for lines!\n");
+            free(lines);  // Free the original buffer if it fails
             exit(1);
         }
+
+        // Assign the new buffer to lines only if it succeeded
+        lines = temp;
     }
 
     // Set line coordinates

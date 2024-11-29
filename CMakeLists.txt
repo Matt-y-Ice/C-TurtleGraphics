@@ -1,3 +1,12 @@
+# CMake configuration file for the C-TurtleGraphics project.
+#
+# This file sets up the build process for the C-TurtleGraphics project using CMake.
+# It specifies the minimum CMake version required, defines compiler flags for different
+# build configurations (debug and release), and includes necessary directories for header files.
+# The source files for the project are listed, and directories for object files and binaries are created.
+# It also specifies the required libraries for linking and sets the output locations for the binary and object files.
+# Finally, an executable target is created and linked with the specified libraries.
+
 # Minimum CMake version
 cmake_minimum_required(VERSION 3.10)
 

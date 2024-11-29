@@ -1,3 +1,55 @@
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~LICENSE~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/*
+ * Copyright (C) 2024 Matthew A. Wilkerson
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+/*
+ * main.c - Entry point for the Interactive C-Turtle Graphics program.
+ *
+ * This file contains the main function that initializes the application,
+ * sets up the necessary libraries, and starts the main loop of the interactive
+ * graphics program. It handles the initialization of SDL2 for window management,
+ * SDL_image for image loading, SDL_ttf for font rendering, and OpenGL for graphics rendering.
+ *
+ * The program simulates a turtle graphics system where users can interactively control
+ * a sprite (the "turtle") on a 2D canvas to draw lines and shapes using the arrow keys,
+ * along with dynamic changes to line color and pen state. The OpenGL context is set up
+ * for 2D rendering, and SDL handles event management and window resizing.
+ *
+ * The main loop continuously handles user input, updates the scene, and renders the
+ * turtle's movements and drawn lines. It also manages OpenGL context for smooth rendering
+ * and provides real-time status information about the turtle's position and state.
+ *
+ * Key Features:
+ * - Initialization of SDL, SDL_image, SDL_ttf, and OpenGL.
+ * - Set up of a window and OpenGL context for rendering 2D graphics.
+ * - Handling of sprite loading, transformation, and rendering.
+ * - Dynamic management of lines drawn on the screen based on user input.
+ * - Real-time display of the turtle's current state, including position and color.
+ *
+ * Cleanup is performed at the end of the program to release resources used by SDL,
+ * SDL_image, SDL_ttf, and OpenGL.
+ *
+ * This program is primarily designed for educational purposes, demonstrating
+ * concepts of graphics rendering, event handling, and interactive programming.
+ */
+
+
+//==================== Header Files ====================
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <stdio.h>
@@ -8,15 +60,21 @@
 #include "sprite.h"
 #include "text.h"
 
-#define WINDOW_TITLE "C-TurtlePackage: Interactive Turtle Graphics"
+
+//==================== Macros ====================
+#define WINDOW_TITLE "Interactive C-Turtle Graphics"
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 800
 
-// Global variables
+
+//==================== Global Variables ====================
 SDL_Window* window = NULL;            // SDL window pointer
 SDL_GLContext glContext;              // OpenGL context for rendering
 
+
+//==================== Main ====================
 int main(int argc, char* argv[]) {
+
     // Initialize window dimensions
     int windowWidth = WINDOW_WIDTH;
     int windowHeight = WINDOW_HEIGHT;
